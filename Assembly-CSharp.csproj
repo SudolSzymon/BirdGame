@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\AutoPlayHandelCollision.cs" />
     <Compile Include="Assets\Scripts\Bird.cs" />
     <Compile Include="Assets\Scripts\Destruction.cs" />
+    <Compile Include="Assets\Scripts\Detector.cs" />
     <Compile Include="Assets\Scripts\GameControler.cs" />
     <Compile Include="Assets\Scripts\handleCollision.cs" />
     <Compile Include="Assets\Scripts\OpenGame.cs" />

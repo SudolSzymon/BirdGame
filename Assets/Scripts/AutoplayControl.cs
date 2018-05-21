@@ -37,7 +37,7 @@ public class AutoplayControl : MonoBehaviour
             currentScore++;
             var obstacle = Instantiate(obstacles[Random.Range(0, obstacles.Count)]);
             obstacle.GetComponent<Rigidbody2D>().velocity = transform.right * speed * -1;
-            if (speed <= 50)
+            if (speed <= 30)
             {
                 speed = speed * dificulty;
                 spawnTime = spawnTime * (1 / dificulty);

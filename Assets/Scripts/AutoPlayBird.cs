@@ -10,10 +10,9 @@ public class AutoPlayBird : MonoBehaviour
     public Rigidbody2D rb2d;
     public Animator anim;
     public int jumps;
-    public float nextJumpTime ;
-    public float nextBetweenJump ;
-    public float jumpInterval ;
+    public float lastJump;
     public float betweenJump;
+    public bool jumping=false;
     // Use this for initialization
     void Start()
     {
@@ -23,7 +22,7 @@ public class AutoPlayBird : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (jumps > 0&&!dead&&Time.time>nextJumpTime)
+        if (jumps >1&&!dead&&jumping)
         {
             anim.SetTrigger("Flap");
             //...zero out the birds current y velocity before...
@@ -32,10 +31,10 @@ public class AutoPlayBird : MonoBehaviour
             //..giving the bird some upward force.
             rb2d.AddForce(new Vector2(0, uForce));
             jumps--;
-            nextJumpTime = Time.time + jumpInterval;
+            lastJump = Time.time;
 
         }
-        if (jumps > 0 && !dead && Time.time > nextBetweenJump)
+        if (jumps > 0 && !dead && Time.time >lastJump+betweenJump&&jumping )
         {
             anim.SetTrigger("Flap");
             //...zero out the birds current y velocity before...
@@ -44,7 +43,7 @@ public class AutoPlayBird : MonoBehaviour
             //..giving the bird some upward force.
             rb2d.AddForce(new Vector2(0, uForce));
             jumps--;
-            nextBetweenJump = nextJumpTime+betweenJump;
+            jumping = false;
 
         }
     }
@@ -53,6 +52,7 @@ public class AutoPlayBird : MonoBehaviour
         if (collision.gameObject.tag == "ground")
         {
             jumps = 2;
+            rb2d.velocity = Vector2.zero;
         }
 
 
@@ -61,16 +61,10 @@ public class AutoPlayBird : MonoBehaviour
 
     public void changeOfDificulty(float dificulty)
     {
-        if(flag)
-        {
-            uForce = uForce * dificulty;
-            jumpInterval = jumpInterval * (1 / dificulty);
         
-        }
-        else
-        {
-            flag = true;
-        }
+            uForce = uForce * dificulty;
+            betweenJump = betweenJump / dificulty;
+    
     }
     public void kill()
     {
@@ -78,6 +72,10 @@ public class AutoPlayBird : MonoBehaviour
         dead = true;
         anim.SetTrigger("Dead");
 
+    }
+    public void jump()
+    {
+        jumping = true;
     }
    
 
